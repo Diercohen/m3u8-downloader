@@ -2,6 +2,12 @@
 
 A simple and efficient bash script to download M3U8 video streams using FFmpeg. This tool provides a convenient alias that makes downloading M3U8 streams as easy as running a single command.
 
+## ⚡ Quick Install [Linux, MacOS]
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.sh)"
+```
+
 ## 🚀 Features
 
 - **One-command installation**: Automated setup script handles everything
