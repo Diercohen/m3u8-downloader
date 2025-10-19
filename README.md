@@ -2,25 +2,33 @@
 
 A simple and efficient bash script to download M3U8 video streams using FFmpeg. This tool provides a convenient alias that makes downloading M3U8 streams as easy as running a single command.
 
-## ⚡ Quick Install [Linux, MacOS]
+## ⚡ Quick Install [Linux, macOS, Windows]
+
+**Linux & macOS:**
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.sh)"
 ```
 
+**Windows (PowerShell):**
+
+```powershell
+Invoke-Expression (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.sh" -UseBasicParsing).Content
+```
+
 ## 🚀 Features
 
 - **One-command installation**: Automated setup script handles everything
-- **Cross-platform support**: Works on macOS and Linux
+- **Cross-platform support**: Works on macOS, Linux, and Windows
 - **Automatic FFmpeg installation**: Installs FFmpeg if not present
-- **Smart shell detection**: Automatically detects bash/zsh and configures accordingly
+- **Smart shell detection**: Automatically detects bash/zsh/PowerShell and configures accordingly
 - **Alias management**: Safely replaces existing aliases
 - **User-friendly interface**: Interactive prompts for easy usage
 
 ## 📋 Requirements
 
 - **FFmpeg**: The script will automatically install it if missing
-- **Bash or Zsh**: Compatible with both shells
+- **Shell**: Compatible with Bash, Zsh, and PowerShell
 - **Internet connection**: For downloading M3U8 streams
 
 ### Additional Requirements by Platform
@@ -37,6 +45,13 @@ A simple and efficient bash script to download M3U8 video streams using FFmpeg. 
   - `yum` (CentOS/RHEL)
   - `dnf` (Fedora)
   - `pacman` (Arch Linux)
+
+#### Windows
+
+- **Package manager**: One of the following (for automatic FFmpeg installation):
+  - `winget` (built-in on Windows 10/11)
+  - `choco` (Chocolatey)
+  - `scoop` (Scoop)
 
 ## 🛠️ Installation
 
@@ -65,6 +80,9 @@ A simple and efficient bash script to download M3U8 video streams using FFmpeg. 
    source ~/.bashrc
    # or
    source ~/.bash_profile
+
+   # For PowerShell users
+   . $PROFILE
    ```
 
 ### Manual Installation
@@ -95,7 +113,20 @@ If you prefer to install manually:
    sudo pacman -S ffmpeg
    ```
 
-2. **Add the alias to your shell configuration**:
+   **Windows**:
+
+   ```powershell
+   # Using winget (Windows 10/11)
+   winget install ffmpeg
+
+   # Using Chocolatey
+   choco install ffmpeg -y
+
+   # Using Scoop
+   scoop install ffmpeg
+   ```
+
+2. **Add the alias/function to your shell configuration**:
 
    **For Zsh users** (add to `~/.zshrc`):
 
@@ -109,9 +140,24 @@ If you prefer to install manually:
    alias m3u8='echo "Enter m3u8 link to download by ffmpeg:";read link;echo "Enter output filename:";read filename;ffmpeg -i "$link" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 $filename.mp4'
    ```
 
+   **For PowerShell users** (add to PowerShell profile):
+
+   ```powershell
+   function m3u8 {
+       $link = Read-Host "Enter m3u8 link to download by ffmpeg"
+       $filename = Read-Host "Enter output filename"
+       ffmpeg -i $link -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 "$filename.mp4"
+   }
+   ```
+
 3. **Reload your shell configuration**:
+
    ```bash
+   # For bash/zsh
    source ~/.zshrc  # or ~/.bashrc
+
+   # For PowerShell
+   . $PROFILE
    ```
 
 ## 📖 Usage
@@ -215,11 +261,36 @@ The script uses these FFmpeg parameters for optimal quality and compatibility:
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   ```
 
-#### Alias not working after installation
+#### "No package manager found" on Windows
+
+- **Solution**: Install a package manager:
+
+  ```powershell
+  # Install Chocolatey
+  Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+  # Or install Scoop
+  Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+  irm get.scoop.sh | iex
+  ```
+
+#### PowerShell execution policy error on Windows
+
+- **Solution**: Allow script execution:
+  ```powershell
+  Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+  ```
+
+#### Alias/function not working after installation
 
 - **Solution**: Reload your shell configuration:
+
   ```bash
+  # For bash/zsh
   source ~/.zshrc  # or ~/.bashrc
+
+  # For PowerShell
+  . $PROFILE
   ```
 
 #### Download fails with "Invalid data found"
@@ -250,10 +321,14 @@ If you encounter issues:
    ffmpeg -version
    ```
 
-2. **Verify the alias is installed**:
+2. **Verify the alias/function is installed**:
 
    ```bash
+   # For bash/zsh
    alias | grep m3u8
+
+   # For PowerShell
+   Get-Command m3u8
    ```
 
 3. **Test with a simple M3U8 stream**:
