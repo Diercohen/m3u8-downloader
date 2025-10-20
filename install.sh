@@ -172,7 +172,7 @@ remove_existing_alias() {
 # Function to add the m3u8 alias
 add_m3u8_alias() {
     local config_file="$1"
-    local alias_line='alias m3u8='\''echo "Enter m3u8 link to download by ffmpeg:";read link;echo "Enter output filename:";read filename;ffmpeg -i "$link" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 $filename.mp4'\'''
+    local alias_line='alias m3u8='\''echo "Enter m3u8 link to download by ffmpeg:";read link;echo "Enter output filename:";read filename;echo "Starting download...";ffmpeg -i "$link" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 $filename.mp4 && echo "Download completed successfully! File saved to: $(pwd)/$filename.mp4"'\'''
     
     # Create config file if it doesn't exist
     if [ ! -f "$config_file" ]; then
