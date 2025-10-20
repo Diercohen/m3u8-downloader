@@ -13,7 +13,11 @@ A simple and efficient bash script to download M3U8 video streams using FFmpeg. 
 **Windows (PowerShell):**
 
 ```powershell
+# Method 1: Direct execution (recommended)
 Invoke-Expression (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.ps1" -UseBasicParsing).Content
+
+# Method 2: If you get execution policy errors, use bypass
+PowerShell -ExecutionPolicy Bypass -Command "Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.ps1' -UseBasicParsing).Content"
 ```
 
 ## 🚀 Features
@@ -280,14 +284,31 @@ The script uses these FFmpeg parameters for optimal quality and compatibility:
 
 #### PowerShell execution policy error on Windows
 
-- **Solution**: Allow script execution:
-  ```powershell
-  Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-  ```
-- **Alternative**: Run the script directly:
-  ```powershell
-  PowerShell -ExecutionPolicy Bypass -File install.ps1
-  ```
+This error occurs when PowerShell's execution policy prevents script execution. Here are several solutions:
+
+**Solution 1: Change execution policy (permanent fix)**
+
+```powershell
+# Run PowerShell as Administrator, then:
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+**Solution 2: Bypass execution policy (temporary)**
+
+```powershell
+# Use the bypass method in the quick install command above
+PowerShell -ExecutionPolicy Bypass -Command "Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.ps1' -UseBasicParsing).Content"
+```
+
+**Solution 3: Download and run locally**
+
+```powershell
+# Download the script first
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.ps1" -OutFile "install.ps1"
+
+# Then run with bypass
+PowerShell -ExecutionPolicy Bypass -File install.ps1
+```
 
 #### Alias/function not working after installation
 
