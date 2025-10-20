@@ -13,7 +13,7 @@ A simple and efficient bash script to download M3U8 video streams using FFmpeg. 
 **Windows (PowerShell):**
 
 ```powershell
-Invoke-Expression (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.sh" -UseBasicParsing).Content
+Invoke-Expression (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.ps1" -UseBasicParsing).Content
 ```
 
 ## 🚀 Features
@@ -67,7 +67,11 @@ Invoke-Expression (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Die
 2. **Run the installation script**:
 
    ```bash
+   # For Linux/macOS
    ./install.sh
+
+   # For Windows PowerShell
+   .\install.ps1
    ```
 
 3. **Reload your shell configuration**:
@@ -279,6 +283,10 @@ The script uses these FFmpeg parameters for optimal quality and compatibility:
 - **Solution**: Allow script execution:
   ```powershell
   Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+  ```
+- **Alternative**: Run the script directly:
+  ```powershell
+  PowerShell -ExecutionPolicy Bypass -File install.ps1
   ```
 
 #### Alias/function not working after installation
