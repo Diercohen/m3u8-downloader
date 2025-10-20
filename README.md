@@ -28,6 +28,7 @@ PowerShell -ExecutionPolicy Bypass -Command "Invoke-Expression (Invoke-WebReques
 - **Smart shell detection**: Automatically detects bash/zsh/PowerShell and configures accordingly
 - **Alias management**: Safely replaces existing aliases
 - **User-friendly interface**: Interactive prompts for easy usage
+- **Download feedback**: Shows full file path after successful download
 
 ## 📋 Requirements
 
@@ -139,13 +140,13 @@ If you prefer to install manually:
    **For Zsh users** (add to `~/.zshrc`):
 
    ```bash
-   alias m3u8='echo "Enter m3u8 link to download by ffmpeg:";read link;echo "Enter output filename:";read filename;ffmpeg -i "$link" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 $filename.mp4'
+   alias m3u8='echo "Enter m3u8 link to download by ffmpeg:";read link;echo "Enter output filename:";read filename;echo "Starting download...";ffmpeg -i "$link" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 $filename.mp4 && echo "Download completed successfully! File saved to: $(pwd)/$filename.mp4"'
    ```
 
    **For Bash users** (add to `~/.bashrc` or `~/.bash_profile`):
 
    ```bash
-   alias m3u8='echo "Enter m3u8 link to download by ffmpeg:";read link;echo "Enter output filename:";read filename;ffmpeg -i "$link" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 $filename.mp4'
+   alias m3u8='echo "Enter m3u8 link to download by ffmpeg:";read link;echo "Enter output filename:";read filename;echo "Starting download...";ffmpeg -i "$link" -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 $filename.mp4 && echo "Download completed successfully! File saved to: $(pwd)/$filename.mp4"'
    ```
 
    **For PowerShell users** (add to PowerShell profile):
@@ -154,7 +155,14 @@ If you prefer to install manually:
    function m3u8 {
        $link = Read-Host "Enter m3u8 link to download by ffmpeg"
        $filename = Read-Host "Enter output filename"
+       Write-Host "Starting download..." -ForegroundColor Yellow
        ffmpeg -i $link -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 "$filename.mp4"
+       if ($LASTEXITCODE -eq 0) {
+           $fullPath = (Get-Location).Path + "\" + "$filename.mp4"
+           Write-Host "Download completed successfully! File saved to: $fullPath" -ForegroundColor Green
+       } else {
+           Write-Host "Download failed!" -ForegroundColor Red
+       }
    }
    ```
 
@@ -191,9 +199,10 @@ Enter m3u8 link to download by ffmpeg:
 https://example.com/stream.m3u8
 Enter output filename:
 my_video
+Starting download...
+[ffmpeg output...]
+Download completed successfully! File saved to: /Users/username/my_video.mp4
 ```
-
-This will download the stream and save it as `my_video.mp4`.
 
 ### Common Use Cases
 
