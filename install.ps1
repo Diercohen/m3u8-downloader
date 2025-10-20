@@ -10,11 +10,11 @@ function Test-ExecutionPolicy {
     $currentPolicy = Get-ExecutionPolicy
     if ($currentPolicy -eq "Restricted") {
         Write-Warning "PowerShell execution policy is set to 'Restricted'"
-        Write-Host "To fix this, run PowerShell as Administrator and execute:" -ForegroundColor Yellow
-        Write-Host "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser" -ForegroundColor Cyan
+        Write-Host "To fix this, run this command first:" -ForegroundColor Yellow
+        Write-Host "Set-ExecutionPolicy Bypass -Scope Process" -ForegroundColor Cyan
         Write-Host ""
-        Write-Host "Or run this script with bypass:" -ForegroundColor Yellow
-        Write-Host "PowerShell -ExecutionPolicy Bypass -File install.ps1" -ForegroundColor Cyan
+        Write-Host "Or run PowerShell as Administrator and execute:" -ForegroundColor Yellow
+        Write-Host "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser" -ForegroundColor Cyan
         Write-Host ""
         Write-Host "Continuing with installation anyway..." -ForegroundColor Green
     }
