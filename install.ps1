@@ -5,6 +5,21 @@ param(
     [switch]$Force
 )
 
+# Check execution policy and provide guidance
+function Test-ExecutionPolicy {
+    $currentPolicy = Get-ExecutionPolicy
+    if ($currentPolicy -eq "Restricted") {
+        Write-Warning "PowerShell execution policy is set to 'Restricted'"
+        Write-Host "To fix this, run PowerShell as Administrator and execute:" -ForegroundColor Yellow
+        Write-Host "Set-ExecutionPolicy RemoteSigned -Scope CurrentUser" -ForegroundColor Cyan
+        Write-Host ""
+        Write-Host "Or run this script with bypass:" -ForegroundColor Yellow
+        Write-Host "PowerShell -ExecutionPolicy Bypass -File install.ps1" -ForegroundColor Cyan
+        Write-Host ""
+        Write-Host "Continuing with installation anyway..." -ForegroundColor Green
+    }
+}
+
 # Colors for output
 $ErrorActionPreference = "Stop"
 
@@ -194,6 +209,10 @@ function m3u8 {
 # Main installation process
 function Main {
     Write-Status "Starting M3U8 Downloader installation for Windows PowerShell..."
+    Write-Host ""
+    
+    # Check execution policy
+    Test-ExecutionPolicy
     Write-Host ""
     
     # Check and install ffmpeg
