@@ -198,7 +198,14 @@ function Add-M3U8Function {
 function m3u8 {
     `$link = Read-Host "Enter m3u8 link to download by ffmpeg"
     `$filename = Read-Host "Enter output filename"
+    Write-Host "Starting download..." -ForegroundColor Yellow
     ffmpeg -i `$link -bsf:a aac_adtstoasc -vcodec copy -c copy -crf 50 "`$filename.mp4"
+    if (`$LASTEXITCODE -eq 0) {
+        `$fullPath = (Get-Location).Path + "\" + "`$filename.mp4"
+        Write-Host "Download completed successfully! File saved to: `$fullPath" -ForegroundColor Green
+    } else {
+        Write-Host "Download failed!" -ForegroundColor Red
+    }
 }
 "@
     
