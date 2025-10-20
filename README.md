@@ -13,11 +13,12 @@ A simple and efficient bash script to download M3U8 video streams using FFmpeg. 
 **Windows (PowerShell):**
 
 ```powershell
-# Method 1: Direct execution (recommended)
+# Method 1: If you get execution policy errors, use bypass (recommended)
+PowerShell -ExecutionPolicy Bypass -Command "Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.ps1' -UseBasicParsing).Content"
+
+# Method 2: Direct execution
 Invoke-Expression (Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.ps1" -UseBasicParsing).Content
 
-# Method 2: If you get execution policy errors, use bypass
-PowerShell -ExecutionPolicy Bypass -Command "Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.ps1' -UseBasicParsing).Content"
 ```
 
 ## 🚀 Features
