@@ -286,28 +286,25 @@ The script uses these FFmpeg parameters for optimal quality and compatibility:
 
 This error occurs when PowerShell's execution policy prevents script execution. Here are several solutions:
 
-**Solution 1: Change execution policy (permanent fix)**
+**Solution 1: Bypass execution policy for current session (recommended)**
+
+```powershell
+# Run this command first, then run the installation:
+Set-ExecutionPolicy Bypass -Scope Process
+```
+
+**Solution 2: Change execution policy permanently**
 
 ```powershell
 # Run PowerShell as Administrator, then:
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-**Solution 2: Bypass execution policy (temporary)**
+**Solution 3: Use bypass in command (alternative)**
 
 ```powershell
 # Use the bypass method in the quick install command above
 PowerShell -ExecutionPolicy Bypass -Command "Invoke-Expression (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.ps1' -UseBasicParsing).Content"
-```
-
-**Solution 3: Download and run locally**
-
-```powershell
-# Download the script first
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Diercohen/m3u8-downloader/refs/heads/main/install.ps1" -OutFile "install.ps1"
-
-# Then run with bypass
-PowerShell -ExecutionPolicy Bypass -File install.ps1
 ```
 
 #### Alias/function not working after installation
